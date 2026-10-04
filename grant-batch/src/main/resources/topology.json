@@ -1,0 +1,18 @@
+{
+  "settings": {
+    "fetchBatchSize": 200,
+    "gridSize": 4,
+    "chunkSize": 10,
+    "topics": {
+      "partitionRequests": "grant.partition.requests",
+      "stockExternal": "grant.stock.external",
+      "cashInternal": "grant.cash.internal"
+    },
+    "egc": { "host": "localhost", "port": 9090, "deadlineMs": 2000, "maxAttempts": 3 }
+  },
+  "services": [
+    { "name": "grant-manager",  "profile": "master", "port": 8081 },
+    { "name": "grant-worker-1", "profile": "worker", "port": 8082 },
+    { "name": "grant-worker-2", "profile": "worker", "port": 8083 }
+  ]
+}

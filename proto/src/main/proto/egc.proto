@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package egc.v1;
+
+option java_multiple_files = true;
+option java_package = "com.practice.egc.proto";
+
+service EgcService {
+  rpc Transform(TransformRequest) returns (TransformResponse);
+}
+
+enum ChangeType {
+  CHANGE_TYPE_UNSPECIFIED = 0;
+  VESTING_SCHEDULE = 1;
+  QUANTITY = 2;
+  PRICE = 3;
+  CASH_PAYOUT = 4;
+}
+
+enum AwardType {
+  AWARD_TYPE_UNSPECIFIED = 0;
+  STOCK = 1;
+  CASH = 2;
+}
+
+message Change {
+  int64 change_id = 1;
+  ChangeType type = 2;
+  string new_value = 3;
+}
+
+message TransformRequest {
+  int64 grant_id = 1;
+  repeated Change changes = 2;
+}
+
+message TransformResponse {
+  int64 grant_id = 1;
+  AwardType award_type = 2;
+  int64 shares = 3;
+  int64 amount_cents = 4;
+  string currency = 5;
+  repeated int64 applied_change_ids = 6;
+}

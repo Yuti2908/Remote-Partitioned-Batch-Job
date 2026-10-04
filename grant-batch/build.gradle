@@ -1,0 +1,22 @@
+plugins {
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+}
+
+dependencies {
+    implementation project(':proto')
+
+    implementation 'org.springframework.boot:spring-boot-starter-batch'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-integration'
+    implementation 'org.springframework.batch:spring-batch-integration'
+    implementation 'org.springframework.integration:spring-integration-kafka'
+    implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'org.springframework.retry:spring-retry'
+    implementation 'io.grpc:grpc-netty-shaded:1.66.0'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+
+    runtimeOnly 'org.postgresql:postgresql'
+}

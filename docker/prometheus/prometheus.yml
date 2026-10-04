@@ -1,0 +1,19 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: grant-batch
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: ['host.docker.internal:8081']
+        labels: { service: grant-manager }
+      - targets: ['host.docker.internal:8082']
+        labels: { service: grant-worker-1 }
+      - targets: ['host.docker.internal:8083']
+        labels: { service: grant-worker-2 }
+
+  - job_name: egc-service
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['host.docker.internal:8090']
+        labels: { service: egc }

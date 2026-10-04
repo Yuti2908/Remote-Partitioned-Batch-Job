@@ -1,0 +1,10 @@
+plugins { id 'application' }
+
+dependencies {
+    implementation project(':proto')
+    implementation 'io.grpc:grpc-netty-shaded:1.66.0'
+    implementation 'io.micrometer:micrometer-registry-prometheus:1.13.4'
+    implementation 'org.slf4j:slf4j-simple:2.0.16'
+}
+
+application { mainClass = 'com.practice.egc.EgcServer' }

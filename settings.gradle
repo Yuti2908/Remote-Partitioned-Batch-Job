@@ -1,0 +1,2 @@
+rootProject.name = 'grant-batch-practice'
+include 'proto', 'egc-service', 'grant-batch'

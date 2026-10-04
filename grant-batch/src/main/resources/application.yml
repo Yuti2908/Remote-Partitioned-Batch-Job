@@ -1,0 +1,53 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/grants
+    username: grants
+    password: grants
+    hikari:
+      maximum-pool-size: 10
+  batch:
+    job:
+      enabled: false              # the job is started via POST /jobs/run on the master
+    jdbc:
+      initialize-schema: always   # creates BATCH_* tables (start the manager first)
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      acks: all
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      properties:
+        # Short timeouts so a dead broker surfaces quickly (and shows up as write-latency + stage rows)
+        max.block.ms: 3000
+        request.timeout.ms: 2000
+        delivery.timeout.ms: 4000
+        linger.ms: 0
+    consumer:
+      auto-offset-reset: earliest
+      properties:
+        # A worker processes a whole partition inside one poll cycle: this must exceed partition time.
+        max.poll.interval.ms: 300000
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus,metrics
+  metrics:
+    tags:
+      application: grant-batch
+    distribution:
+      percentiles-histogram:
+        "[spring.batch]": true
+      minimum-expected-value:
+        "[spring.batch]": 10ms
+      maximum-expected-value:
+        "[spring.batch]": 10m     # default top bucket is far too low for multi-minute partitions
+
+logging:
+  level:
+    com.practice: INFO
